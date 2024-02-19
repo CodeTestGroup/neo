@@ -3,19 +3,29 @@
 <head>
     <title>NEO</title>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        iframe {
+        #content {
             width: 100%;
             height: 100%;
-            border: none; /* Optional: removes iframe border */
         }
     </style>
+    <script>
+        function loadContent() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.getElementById("content").innerHTML = xhr.responseText;
+                    } else {
+                        console.error('Error loading content: ' + xhr.status);
+                    }
+                }
+            };
+            xhr.open("GET", "https://content-charming-foxhound.ngrok-free.app/", true);
+            xhr.send();
+        }
+    </script>
 </head>
-<body>
-    <iframe src="https://content-charming-foxhound.ngrok-free.app/"></iframe>
+<body onload="loadContent()">
+    <div id="content"></div>
 </body>
 </html>
